@@ -66,9 +66,9 @@ if experiment == 'Random Delay':
     
 # Spikes
 if protocol=='P0' or protocol=='NB':
-    spike_path = fr'D:/F.LARENO.FACCINI/RESULTS/Spike Sorting/Spike Times/{experiment}/{mouse}-{tag}-{protocol}_Spike_times_changrp0.xlsx' 
+    spike_path = fr'\\equipe2-nas1\F.LARENO-FACCINI\BACKUP FEDE\RESULTS\Spike Sorting\Spike Times\\{experiment}/{mouse}-{tag}-{protocol}_Spike_times_changrp0.xlsx' 
 else:
-    spike_path = fr'D:/F.LARENO.FACCINI/RESULTS/Spike Sorting/Spike Times/{experiment}/{mouse}-{tag}-{protocol}-{condition.replace(" ","")}_Spike_times_changrp0.xlsx' 
+    spike_path = fr'\\equipe2-nas1\F.LARENO-FACCINI\BACKUP FEDE\RESULTS\Spike Sorting\Spike Times\\{experiment}/{mouse}-{tag}-{protocol}-{condition.replace(" ","")}_Spike_times_changrp0.xlsx' 
 spike_df = pd.read_excel(spike_path, sheet_name=None)
 
 for k,v in spike_df.items():
@@ -134,5 +134,5 @@ for trial_index, trial in enumerate(bl.segments):
             trial.epochs.append(ep)
 
 
-with neo.NixIO(f'D:\F.LARENO.FACCINI\Preliminary Results\Scripts\Trial Neo\{mouse}_{protocol}.nix', mode='ow') as writer:
+with neo.NixIO(f'D:\F.LARENO.FACCINI\Preliminary Results\Scripts\Trial Neo\{mouse}_{protocol}_{condition}.nix', mode='ow') as writer:
     writer.write_block(bl)
