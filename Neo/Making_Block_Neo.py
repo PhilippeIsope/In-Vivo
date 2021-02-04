@@ -17,14 +17,17 @@ mouse = 173
 gender = 'Female'
 experiment = 'Fixed Delay'
 condition = 'No Stim'
-protocol = 'P0'
+protocol = 'P13'
 
 ch_group = ([14,9,12,11,10,13,8,15],[7,0,5,2,3,4,1,6])
 
 if experiment == 'Random Delay':
     skip_last = True
+    tag = 'ER'
+    
 elif experiment == 'Fixed Delay':
     skip_last = False
+    tag = 'EF'
 
 path = fr'\\equipe2-nas1\F.LARENO-FACCINI\BACKUP FEDE\Ephy\Group {group}\{mouse} (CM16-Buz - {gender})\{experiment}\{protocol}\{condition}'
 files = og.file_list(path, ext='.rbf')
@@ -62,7 +65,10 @@ if experiment == 'Random Delay':
     
     
 # Spikes
-spike_path = r'D:/F.LARENO.FACCINI/RESULTS/Spike Sorting/Spike Times/Fixed Delay/173-EF-P0_Spike_times_changrp0.xlsx' #TODO automatize this path
+if protocol=='P0' or protocol=='NB':
+    spike_path = fr'D:/F.LARENO.FACCINI/RESULTS/Spike Sorting/Spike Times/{experiment}/{mouse}-{tag}-{protocol}_Spike_times_changrp0.xlsx' 
+else:
+    spike_path = fr'D:/F.LARENO.FACCINI/RESULTS/Spike Sorting/Spike Times/{experiment}/{mouse}-{tag}-{protocol}-{condition.replace(" ","")}_Spike_times_changrp0.xlsx' 
 spike_df = pd.read_excel(spike_path, sheet_name=None)
 
 for k,v in spike_df.items():
@@ -130,5 +136,3 @@ for trial_index, trial in enumerate(bl.segments):
 
 with neo.NixIO(f'D:\F.LARENO.FACCINI\Preliminary Results\Scripts\Trial Neo\{mouse}_{protocol}.nix', mode='ow') as writer:
     writer.write_block(bl)
-    
-    
